@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block body %}
+    <h1>Home</h1>
+    {% if current_user.is_authenticated %}
+        <span>Search books by title/author/ISBN</span>
+        <form action="" method="POST">
+            {{form.hidden_tag()}}
+            <div class ="container row justify-content-between">
+                {{form.select(class="form-control col col-2")}}  
+                {{form.query(class="form-control col col-7", placeholder="Search", autocomplete="off")}} 
+                {{form.submit(class="btn btn-outline-success col col-2")}} <br>
+            </div>
+        </form>
+        {% if books %}
+            <h1>Results</h1>
+            <ul class="list-group list-group-flush">
+                {% for book in books %}
+                    <li class="list-group-item">
+                        <a href="{{url_for('books.book', id=book.id)}}" class="nav-item nav-link">{{book.title}}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% else %}
+    <h6 class="mb-2 text-muted">Please login or register to review a book!</h6>
+    {% endif %}
+
+{% endblock %}

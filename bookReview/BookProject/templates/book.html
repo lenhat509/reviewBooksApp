@@ -1,0 +1,59 @@
+{% extends "layout.html" %}
+{% block body %} 
+    <h1>Book Detail</h1>
+    <div class="card" style="width: 18rem;">
+        <div class="card-body">
+          <h4 class="card-title">Title: {{book.title}}</h4>
+          <h6 class="card-subtitle mb-2 text-muted">Author: {{book.author}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">Publication year: {{book.year}}</h6>
+          <h6 class="card-subtitle mb-2 text-muted">ISBN: {{book.isbn}}</h6>
+        </div>
+    </div><br>
+    {% if form %}
+    <h1>Write your comment</h1>
+    <div class="col col-lg-6">
+        <form action="" method="POST">
+            {{form.hidden_tag()}}
+            <div class="form-group">
+                {{form.rating.label(class="form-control-label")}} 
+                    {% if form.rating.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.rating.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {{form.rating(class="form-control form-control-lg")}}
+            </div>
+            <div class="form-group">
+                {{form.comment.label(class="form-control-label")}} 
+                    {% if form.comment.errors %}
+                        <div class="alert alert-danger">
+                            {% for error in form.comment.errors %}
+                                <span>{{error}}</span>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {{form.comment(class="form-control form-control-lg")}} 
+            </div>
+            {{form.submit(class="btn btn-primary")}}
+        </form>
+    </div>
+    {% else %}
+        <p class="alert alert-warning">You already reviewed this book!!</p>
+    {% endif %}
+
+    <h1>Reviews</h1>
+    <span>{{goodReads}}</span>
+    {% if book.reviews %}
+        {% for review in book.reviews %}
+        <div class="card" >
+            <div class="card-body">
+              <h5 class="card-title">{{review.user.username}}</h5>
+              <h6 class="card-subtitle mb-2 text-muted">Rating : {{review.rating}} ({{review.date.strftime('%m-%d-%Y')}}) </h6>
+              <p class="card-text">{{review.comment}}</p>
+            </div>
+        </div><br>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
