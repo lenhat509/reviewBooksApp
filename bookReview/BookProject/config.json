@@ -1,5 +1,5 @@
 {
-    "SQLALCHEMY_DATABASE_URI": 'Your database URI',
+    "SQLALCHEMY_DATABASE_URI": "Your database URI",
     "API_KEY":"Your key",
     "SECRET_KEY":"Your key"
 }
